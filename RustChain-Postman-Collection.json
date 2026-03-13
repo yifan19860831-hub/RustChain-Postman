@@ -1,0 +1,251 @@
+{
+  "info": {
+    "name": "RustChain API",
+    "description": "RustChain Proof-of-Antiquity Blockchain API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "auth": {
+    "type": "noauth"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://rustchain.org",
+      "type": "string"
+    },
+    {
+      "key": "wallet_id",
+      "value": "YOUR_WALLET_NAME",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Network",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            },
+            "description": "Check node health and status"
+          },
+          "response": []
+        },
+        {
+          "name": "Current Epoch",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/epoch",
+              "host": ["{{base_url}}"],
+              "path": ["epoch"]
+            },
+            "description": "Get current epoch information"
+          },
+          "response": []
+        },
+        {
+          "name": "List Active Miners",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/miners",
+              "host": ["{{base_url}}"],
+              "path": ["api", "miners"]
+            },
+            "description": "List all active miners on the network"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Wallet",
+      "item": [
+        {
+          "name": "Check Wallet Balance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/wallet/balance?miner_id={{wallet_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["wallet", "balance"],
+              "query": [
+                {
+                  "key": "miner_id",
+                  "value": "{{wallet_id}}"
+                }
+              ]
+            },
+            "description": "Check RTC balance for a wallet"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Governance",
+      "item": [
+        {
+          "name": "List Proposals",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/governance/proposals",
+              "host": ["{{base_url}}"],
+              "path": ["governance", "proposals"]
+            },
+            "description": "List all governance proposals"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Proposal Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/governance/proposal/:id",
+              "host": ["{{base_url}}"],
+              "path": ["governance", "proposal", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Proposal ID"
+                }
+              ]
+            },
+            "description": "Get details of a specific proposal"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Proposal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"RTC...\",\n  \"title\": \"Enable parameter X\",\n  \"description\": \"Rationale and implementation details\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/governance/propose",
+              "host": ["{{base_url}}"],
+              "path": ["governance", "propose"]
+            },
+            "description": "Create a new governance proposal (requires >10 RTC)"
+          },
+          "response": []
+        },
+        {
+          "name": "Submit Vote",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"proposal_id\": 1,\n  \"wallet\": \"RTC...\",\n  \"vote\": \"yes\",\n  \"nonce\": \"1700000000\",\n  \"public_key\": \"<ed25519_pubkey_hex>\",\n  \"signature\": \"<ed25519_signature_hex>\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/governance/vote",
+              "host": ["{{base_url}}"],
+              "path": ["governance", "vote"]
+            },
+            "description": "Submit a signed vote on a proposal"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Premium API (x402)",
+      "item": [
+        {
+          "name": "Bulk Video Export",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/premium/videos",
+              "host": ["{{base_url}}"],
+              "path": ["api", "premium", "videos"]
+            },
+            "description": "Bulk video export (BoTTube) - requires x402 payment"
+          },
+          "response": []
+        },
+        {
+          "name": "Agent Analytics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/premium/analytics/:agent",
+              "host": ["{{base_url}}"],
+              "path": ["api", "premium", "analytics", ":agent"],
+              "variable": [
+                {
+                  "key": "agent",
+                  "value": "agent-name",
+                  "description": "Agent name"
+                }
+              ]
+            },
+            "description": "Deep agent analytics (BoTTube) - requires x402 payment"
+          },
+          "response": []
+        },
+        {
+          "name": "Reputation Export",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/premium/reputation",
+              "host": ["{{base_url}}"],
+              "path": ["api", "premium", "reputation"]
+            },
+            "description": "Full reputation export (Beacon Atlas) - requires x402 payment"
+          },
+          "response": []
+        },
+        {
+          "name": "Swap Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/wallet/swap-info",
+              "host": ["{{base_url}}"],
+              "path": ["wallet", "swap-info"]
+            },
+            "description": "USDC/wRTC swap guidance - requires x402 payment"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
